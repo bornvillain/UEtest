@@ -17,6 +17,7 @@ ACppBaseActor::ACppBaseActor()
 void ACppBaseActor::BeginPlay()
 {
 	Super::BeginPlay();
+	InitialLocation=FVector(FMath::FRandRange(200.0f, 1000.0f), FMath::FRandRange(200.0f, 1000.0f), 500.0f);
 }
 
 // Called every frame
@@ -38,4 +39,11 @@ void ACppBaseActor::ShowInformation() {
 	UE_LOG(LogTemp, Display, TEXT("EnemyNum: %d"), EnemyNum);
 	UE_LOG(LogTemp, Display, TEXT("CurrentHealth: %f"), CurrentHealth);
 	UE_LOG(LogTemp, Display, TEXT("IsAlive: %i"), isAlive);
+}
+
+void ACppBaseActor::SinMovement(){
+	float z = Amplitude * FMath::Sin(Frequency * GetWorld()->GetTimeSeconds()) + InitialLocation.Z;
+	FVector NewLocation = InitialLocation;
+	NewLocation.Z = z;
+	SetActorLocation(NewLocation);
 }
